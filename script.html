@@ -1,0 +1,52 @@
+<script>
+    let plays = ['rock', 'paper', 'scissor'];
+    
+    function computerPlay(){
+        return plays[Math.floor(Math.random() * plays.length)]; //returns a random element from "plays"
+    }
+
+    function playRound(playerSlection, computerSelection){
+        let winMessage = 'Win';
+        let loseMessage = 'Lose';
+
+        switch(playerSlection.toLowerCase()){
+            case 'rock':
+                return computerSelection == 'rock' ? 'Tie' : computerSelection == 'scissor' ? winMessage : loseMessage;
+            case 'paper':
+                return computerSelection == 'paper' ? 'Tie' : computerSelection == 'rock' ? winMessage : loseMessage;
+            case 'scissor':
+                return computerSelection == 'scissor' ? 'Tie' : computerSelection == 'paper' ? winMessage : loseMessage;
+            default:
+                console.log('INVALID PLAY');
+        }
+    }
+
+
+    function game(){
+        let playerWinCount = 0;
+        let computerWinCount = 0;
+
+        for(let i = 0; i <= 4; i++){
+            let playerHand = prompt('Select a Play: ');
+            let computerHand = computerPlay();
+            switch(playRound(playerHand, computerHand)){
+                case 'Win':
+                    playerWinCount++;
+                    console.log('You won against ' + computerHand);
+                    break;
+                case 'Lose':
+                    computerWinCount++;
+                    console.log('You lost against ' + computerHand);
+                    break;
+                default:
+                    console.log('Tie');
+            }
+        }
+
+        return playerWinCount == computerWinCount ? 'a Tie' : playerWinCount > computerWinCount ? 'You Win!' : 'You Loose!';
+    }
+
+    console.log(game());
+
+
+</script>
