@@ -1,0 +1,30 @@
+body {
+    position: relative;
+    background-color: gray;
+}
+
+.selection {
+    display: flex;
+    justify-content: center;
+}
+
+.selection button {
+    font-size: 20px;
+}
+
+.results {
+    text-align: center;
+}
+
+.outcome {
+    text-align: center;
+}
+
+.outcome-modified {
+    background-color: greenyellow;
+    border: 5px solid black;
+    border-color: black;
+    height: 80px;
+    width: 300px;
+    margin: auto;
+}

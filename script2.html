@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>rock paper scissor</title>
+        <link href='.//style.css' rel='stylesheet'>
+    </head>
+
+    <body>
+        <div class="selection">
+            <button id="rock"> Rock </button>
+            <button id="paper"> Paper </button>
+            <button id="scissor"> Scissor </button>
+        </div>
+        <div class="results"></div>
+        <div class="outcome"></div>
+    </body>
+
+
+    <script>
+        let plays = ['rock', 'paper', 'scissor'];
+        let numMoves = 0;
+        let playerWinCount = 0;
+        let computerWinCount = 0;
+        
+        function computerPlay(){
+            return plays[Math.floor(Math.random() * plays.length)]; //returns a random element from "plays"
+        }
+
+        function playRound(playerSlection, computerSelection){
+            let winMessage = 'Win';
+            let loseMessage = 'Lose';
+
+            switch(playerSlection.toLowerCase()){
+                case 'rock':
+                    return computerSelection == 'rock' ? 'Tie' : computerSelection == 'scissor' ? winMessage : loseMessage;
+                case 'paper':
+                    return computerSelection == 'paper' ? 'Tie' : computerSelection == 'rock' ? winMessage : loseMessage;
+                case 'scissor':
+                    return computerSelection == 'scissor' ? 'Tie' : computerSelection == 'paper' ? winMessage : loseMessage;
+                default:
+                    console.log('INVALID PLAY');
+            }
+        }
+
+
+        window.addEventListener('click', (e) => {
+            const selectedHand = e.target.id;
+            let computerHand = computerPlay();
+            if(!selectedHand || numMoves == 5) { return; }
+            //const selection = document.querySelector(`.selection[id="${selectedHand}"]`);
+            const results = document.querySelector('.results');
+            const resultContent = document.createElement('p');
+            
+            switch(playRound(selectedHand, computerHand)){
+                    case 'Win':
+                        playerWinCount++;
+                        resultContent.textContent = 'You WON against ' + computerHand.toUpperCase();
+                        break;
+                    case 'Lose':
+                        computerWinCount++;
+                        resultContent.textContent = 'You LOST against ' + computerHand.toUpperCase();
+                        break;
+                    default:
+                        resultContent.textContent = 'TIED';
+                }
+
+            results.appendChild(resultContent);
+            numMoves++
+
+            if (numMoves == 5) {
+                const outcome = document.querySelector('.outcome');
+                const outcomeContent = document.createElement('p');
+                const resetButton = document.createElement('button');
+
+                outcome.classList.add('outcome-modified');
+                outcomeContent.textContent = (playerWinCount == computerWinCount) ? 'A Tie...' : playerWinCount > computerWinCount ? 'You Win!' : 'You Loose!';
+                resetButton.textContent = 'RESTART'
+
+                resetButton.addEventListener('click', () => {
+                    const results = document.querySelector('.results'); //still works if i remove this line.
+                    const outcome = document.querySelector('.outcome'); //still works if i remove this line.
+                    outcome.classList.remove('outcome-modified');
+                    outcome.innerHTML = '';
+                    results.innerHTML = '';
+                    numMoves = 0;
+                    playerWinCount = 0;
+                    computerWinCount = 0;
+                });
+
+                outcome.appendChild(outcomeContent);
+                outcome.appendChild(resetButton);
+            }
+            
+        
+        });
+        
+        
+
+    </script>
+</html>
